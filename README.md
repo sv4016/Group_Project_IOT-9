@@ -154,5 +154,10 @@ In the future we can be able to make the system more responsive by including a s
 ![IoT img1](https://github.com/user-attachments/assets/8ec7df37-28af-43a9-be82-d5f6e5c95281)
 
 
+https://github.com/user-attachments/assets/9a76da82-74e8-4cfe-b14d-549225b4376f
+
+
+
+
 
 
