@@ -28,7 +28,7 @@ Optimal Energy Saving: Nodes do not switch on Wi-Fi (consumes approximately 150m
 
 Dockerized Storage: The data storage is managed through Docker containers such that historical sensor data is stored in the safest way possible.
 
-Node-RED Visualization: Node-RED is a dashboard application that subscribes to the MQTT messages being sent by the Gateway to update live gauges and status.
+Node-RED Visualization: Node-RED is a dashboard application that subscribes to the MQTT messages being sent by the Gateway to update live gauges and status. In this project, Node-RED is also deployed on a local docker container and bind MQTT broker to plot real time charts and create management/monitoring dashboards.
 
 **System Architecture**
 
