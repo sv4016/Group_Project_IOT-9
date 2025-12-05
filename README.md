@@ -147,6 +147,10 @@ In the future we can be able to make the system more responsive by including a s
 
 ## OUTPUT
 
+**Before:**
+![WhatsApp Image 2025-11-24 at 23 59 40_8aec2206](https://github.com/user-attachments/assets/077e4997-6302-4281-a4a7-a1e09a4d42c8)
+
+**After:**
 ![IoT img1](https://github.com/user-attachments/assets/8ec7df37-28af-43a9-be82-d5f6e5c95281)
 
 
