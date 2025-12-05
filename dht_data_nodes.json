@@ -1,0 +1,668 @@
+[
+    {
+        "id": "4ce6f98c.254bf",
+        "type": "tab",
+        "label": "Plot DHT Sensor Data",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "49ce87c1.4ec838",
+        "type": "change",
+        "z": "4ce6f98c.254bf",
+        "name": "Chart Temperature",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.temperature",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 730,
+        "y": 100,
+        "wires": [
+            [
+                "1d4ec5b5.82c9f2",
+                "6e950f1b003dd724"
+            ]
+        ]
+    },
+    {
+        "id": "2f57084.22acd78",
+        "type": "change",
+        "z": "4ce6f98c.254bf",
+        "name": "Chart Humidity",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.humidity",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 720,
+        "y": 160,
+        "wires": [
+            [
+                "fda5229a.103b8",
+                "2f3ea5a3aed12120"
+            ]
+        ]
+    },
+    {
+        "id": "d7a2c22e.f27d1",
+        "type": "switch",
+        "z": "4ce6f98c.254bf",
+        "name": "Warn on High Values",
+        "property": "payload.Metrics.Temperature_C",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "30",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 740,
+        "y": 220,
+        "wires": [
+            [
+                "732cea1.a542294"
+            ]
+        ]
+    },
+    {
+        "id": "732cea1.a542294",
+        "type": "template",
+        "z": "4ce6f98c.254bf",
+        "name": "Alert Msg",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "Alert : Critical Value Detected {{payload.d.temp}}",
+        "output": "str",
+        "x": 940,
+        "y": 220,
+        "wires": [
+            [
+                "80bbdd78.c69ae8"
+            ]
+        ]
+    },
+    {
+        "id": "46f3a55.224d15c",
+        "type": "mqtt in",
+        "z": "4ce6f98c.254bf",
+        "name": "",
+        "topic": "greenhouse/node1/data",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "d9607df8f1a2f900",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 130,
+        "y": 140,
+        "wires": [
+            [
+                "49ce87c1.4ec838",
+                "2f57084.22acd78",
+                "d7a2c22e.f27d1",
+                "cd74c3d7db524f11"
+            ]
+        ]
+    },
+    {
+        "id": "1d4ec5b5.82c9f2",
+        "type": "ui_chart",
+        "z": "4ce6f98c.254bf",
+        "name": "",
+        "group": "eadef827b4385d5f",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "label": "DHT Temp node1 ",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": "10",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1030,
+        "y": 20,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fda5229a.103b8",
+        "type": "ui_chart",
+        "z": "4ce6f98c.254bf",
+        "name": "",
+        "group": "eadef827b4385d5f",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "DHT Humidity node1",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": "10",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1020,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "80bbdd78.c69ae8",
+        "type": "ui_toast",
+        "z": "4ce6f98c.254bf",
+        "position": "top right",
+        "displayTime": "5",
+        "highlight": "",
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "topic": "",
+        "name": "",
+        "x": 1130,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "2f3ea5a3aed12120",
+        "type": "ui_gauge",
+        "z": "4ce6f98c.254bf",
+        "name": "",
+        "group": "eadef827b4385d5f",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Humidity  node1",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#008fb3",
+            "#0077e6",
+            "#3a3ecb"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1000,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "6e950f1b003dd724",
+        "type": "ui_gauge",
+        "z": "4ce6f98c.254bf",
+        "name": "",
+        "group": "eadef827b4385d5f",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "T °C node 1",
+        "label": "°C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1030,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "cd74c3d7db524f11",
+        "type": "debug",
+        "z": "4ce6f98c.254bf",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": false,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 370,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "02a9a4efbb31c3ac",
+        "type": "change",
+        "z": "4ce6f98c.254bf",
+        "name": "Chart Temperature",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.temperature",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 695,
+        "y": 745,
+        "wires": [
+            [
+                "13c58b952579401f",
+                "5514bff354f8037f"
+            ]
+        ]
+    },
+    {
+        "id": "a04b5997a736a544",
+        "type": "change",
+        "z": "4ce6f98c.254bf",
+        "name": "Chart Humidity",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.humidity",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 675,
+        "y": 805,
+        "wires": [
+            [
+                "1e5c4fd13070a1e6",
+                "fc4fe72e442a7a2a"
+            ]
+        ]
+    },
+    {
+        "id": "3a0f4c0476e967c8",
+        "type": "switch",
+        "z": "4ce6f98c.254bf",
+        "name": "Warn on High Values",
+        "property": "payload.Metrics.Temperature_C",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gt",
+                "v": "30",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 715,
+        "y": 865,
+        "wires": [
+            [
+                "e893fc84ef0b7513"
+            ]
+        ]
+    },
+    {
+        "id": "e893fc84ef0b7513",
+        "type": "template",
+        "z": "4ce6f98c.254bf",
+        "name": "Alert Msg",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "Alert : Critical Value Detected {{payload.d.temp}}",
+        "output": "str",
+        "x": 875,
+        "y": 865,
+        "wires": [
+            [
+                "295d6fc0a252a6d1"
+            ]
+        ]
+    },
+    {
+        "id": "1e0b37a2552a6242",
+        "type": "mqtt in",
+        "z": "4ce6f98c.254bf",
+        "name": "",
+        "topic": "greenhouse/node2/data",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "d9607df8f1a2f900",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 105,
+        "y": 785,
+        "wires": [
+            [
+                "02a9a4efbb31c3ac",
+                "a04b5997a736a544",
+                "3a0f4c0476e967c8",
+                "a7f980e5b6fc533d"
+            ]
+        ]
+    },
+    {
+        "id": "13c58b952579401f",
+        "type": "ui_chart",
+        "z": "4ce6f98c.254bf",
+        "name": "",
+        "group": "eadef827b4385d5f",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "label": "DHT Temp node2",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": "10",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 995,
+        "y": 665,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1e5c4fd13070a1e6",
+        "type": "ui_chart",
+        "z": "4ce6f98c.254bf",
+        "name": "",
+        "group": "eadef827b4385d5f",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "DHT Humidity node2",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": "10",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 995,
+        "y": 825,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "295d6fc0a252a6d1",
+        "type": "ui_toast",
+        "z": "4ce6f98c.254bf",
+        "position": "top right",
+        "displayTime": "5",
+        "highlight": "",
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "topic": "",
+        "name": "",
+        "x": 1095,
+        "y": 865,
+        "wires": []
+    },
+    {
+        "id": "fc4fe72e442a7a2a",
+        "type": "ui_gauge",
+        "z": "4ce6f98c.254bf",
+        "name": "",
+        "group": "eadef827b4385d5f",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Humidity  node2",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#008fb3",
+            "#0077e6",
+            "#3a3ecb"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 955,
+        "y": 785,
+        "wires": []
+    },
+    {
+        "id": "5514bff354f8037f",
+        "type": "ui_gauge",
+        "z": "4ce6f98c.254bf",
+        "name": "",
+        "group": "eadef827b4385d5f",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "T °C node 2",
+        "label": "°C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 975,
+        "y": 725,
+        "wires": []
+    },
+    {
+        "id": "a7f980e5b6fc533d",
+        "type": "debug",
+        "z": "4ce6f98c.254bf",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": false,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 315,
+        "y": 925,
+        "wires": []
+    },
+    {
+        "id": "d9607df8f1a2f900",
+        "type": "mqtt-broker",
+        "name": "hiivemq cloud",
+        "broker": "d946ca5ed00846249842517aab740e61.s1.eu.hivemq.cloud",
+        "port": "8883",
+        "tls": "",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "eadef827b4385d5f",
+        "type": "ui_group",
+        "name": "ESP32 Monitoring",
+        "tab": "f6f3023f2ea2a2e0",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "f6f3023f2ea2a2e0",
+        "type": "ui_tab",
+        "name": "ESP32 Monitoring",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "3c21211df860236b",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6"
+        }
+    }
+]

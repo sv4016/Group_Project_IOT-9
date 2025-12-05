@@ -1,0 +1,169 @@
+[
+    {
+        "id": "f57f32df.2e86d",
+        "type": "tab",
+        "label": "Store Sensor Data",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "3f0be2ca.a1cc0e",
+        "type": "function",
+        "z": "f57f32df.2e86d",
+        "name": "Format Time Series DB record",
+        "func": "msg.payload = {\n    time: new Date().getTime(),\n    node_id: msg.payload.node,\n    node_name: msg.payload.name,\n    humidity: msg.payload.humidity,\n    temperature: msg.payload.temperature,\n    tempCondition: msg.payload.tempCondition,\n    humCondition: msg.payload.humCondition\n};\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 220,
+        "wires": [
+            [
+                "51ccebd43c49cca7"
+            ]
+        ]
+    },
+    {
+        "id": "826667e0.94458",
+        "type": "mqtt in",
+        "z": "f57f32df.2e86d",
+        "name": "",
+        "topic": "greenhouse/node1/data",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "d9607df8f1a2f900",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 140,
+        "y": 220,
+        "wires": [
+            [
+                "3f0be2ca.a1cc0e"
+            ]
+        ]
+    },
+    {
+        "id": "51ccebd43c49cca7",
+        "type": "mongodb out",
+        "z": "f57f32df.2e86d",
+        "mongodb": "fb3b9588c974d6e8",
+        "name": "",
+        "collection": "node1",
+        "payonly": false,
+        "upsert": false,
+        "multi": false,
+        "operation": "insert",
+        "x": 950,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "f6ceb0e4d77b0d18",
+        "type": "function",
+        "z": "f57f32df.2e86d",
+        "name": "Format Time Series DB record",
+        "func": "msg.payload = {\n    time: new Date().getTime(),\n    node_id: msg.payload.node,\n    node_name: msg.payload.name,\n    humidity: msg.payload.humidity,\n    temperature: msg.payload.temperature,\n    tempCondition: msg.payload.tempCondition,\n    humCondition: msg.payload.humCondition\n};\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 400,
+        "wires": [
+            [
+                "021e313bc90140f3"
+            ]
+        ]
+    },
+    {
+        "id": "95e2db43ca09bc19",
+        "type": "mqtt in",
+        "z": "f57f32df.2e86d",
+        "name": "",
+        "topic": "greenhouse/node2/data",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "d9607df8f1a2f900",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 180,
+        "y": 400,
+        "wires": [
+            [
+                "f6ceb0e4d77b0d18"
+            ]
+        ]
+    },
+    {
+        "id": "021e313bc90140f3",
+        "type": "mongodb out",
+        "z": "f57f32df.2e86d",
+        "mongodb": "fb3b9588c974d6e8",
+        "name": "",
+        "collection": "node2",
+        "payonly": false,
+        "upsert": false,
+        "multi": false,
+        "operation": "insert",
+        "x": 990,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "d9607df8f1a2f900",
+        "type": "mqtt-broker",
+        "name": "hiivemq cloud",
+        "broker": "d946ca5ed00846249842517aab740e61.s1.eu.hivemq.cloud",
+        "port": "8883",
+        "tls": "",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "fb3b9588c974d6e8",
+        "type": "mongodb",
+        "hostname": "mongodb",
+        "topology": "direct",
+        "connectOptions": "",
+        "port": 27017,
+        "db": "iot_db",
+        "name": ""
+    },
+    {
+        "id": "dd021d90d67b1e4a",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-node-mongodb": "0.2.5"
+        }
+    }
+]

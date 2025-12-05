@@ -1,0 +1,269 @@
+[
+    {
+        "id": "572a4fbb.49dd48",
+        "type": "tab",
+        "label": "Historical Chart",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "fe0204d0.c3dad8",
+        "type": "ui_chart",
+        "z": "572a4fbb.49dd48",
+        "name": "",
+        "group": "5571671c.8ea9b",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "ESP321 node1 DHT data",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "waiting for data",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": "10",
+        "removeOlderPoints": "5000",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#387038",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1050,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9e5cf2f1.9769b",
+        "type": "ui_button",
+        "z": "572a4fbb.49dd48",
+        "name": "",
+        "group": "11d8514.a44dcaf",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Load Node1 Data From DB",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 160,
+        "y": 180,
+        "wires": [
+            [
+                "ad26cd9d915b289f"
+            ]
+        ]
+    },
+    {
+        "id": "ad26cd9d915b289f",
+        "type": "mongodb in",
+        "z": "572a4fbb.49dd48",
+        "mongodb": "fb3b9588c974d6e8",
+        "name": "",
+        "collection": "node1",
+        "operation": "find",
+        "x": 430,
+        "y": 180,
+        "wires": [
+            [
+                "c31f0811.b2031"
+            ]
+        ]
+    },
+    {
+        "id": "c31f0811.b2031",
+        "type": "function",
+        "z": "572a4fbb.49dd48",
+        "name": "Create a Chart Array for Chart.js",
+        "func": "var ChartData = [\n    {\n        series: [\"Temperature\", \"Humidity\"],\n        data: [[], []],\n        labels: [\"Temperature\", \"Humidity\"]\n    }\n];\n\nfor (var i = 0; i < msg.payload.length; i++) {\n    var item = msg.payload[i];\n    var p = item.payload;\n\n    if (!p || typeof p.time === 'undefined') {\n        continue;\n    }\n\n    ChartData[0].data[0].push({ x: p.time, y: p.temperature });\n    ChartData[0].data[1].push({ x: p.time, y: p.humidity });\n}\n\nChartData[0].data[0].sort((a, b) => a.x - b.x);\nChartData[0].data[1].sort((a, b) => a.x - b.x);\n\nmsg.payload = ChartData;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 180,
+        "wires": [
+            [
+                "fe0204d0.c3dad8"
+            ]
+        ]
+    },
+    {
+        "id": "a7d6b8ed14f8dec3",
+        "type": "ui_chart",
+        "z": "572a4fbb.49dd48",
+        "name": "",
+        "group": "5571671c.8ea9b",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "ESP322 node2 DHT data",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "waiting for data",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "100",
+        "removeOlder": "10",
+        "removeOlderPoints": "5000",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#387038",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1050,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d20e5bb6ca209f96",
+        "type": "ui_button",
+        "z": "572a4fbb.49dd48",
+        "name": "",
+        "group": "11d8514.a44dcaf",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Load Node2 Data From DB",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 120,
+        "y": 320,
+        "wires": [
+            [
+                "25c5c28df782e7b2"
+            ]
+        ]
+    },
+    {
+        "id": "25c5c28df782e7b2",
+        "type": "mongodb in",
+        "z": "572a4fbb.49dd48",
+        "mongodb": "fb3b9588c974d6e8",
+        "name": "",
+        "collection": "node2",
+        "operation": "find",
+        "x": 390,
+        "y": 320,
+        "wires": [
+            [
+                "46ef4be9ea93c2e9"
+            ]
+        ]
+    },
+    {
+        "id": "46ef4be9ea93c2e9",
+        "type": "function",
+        "z": "572a4fbb.49dd48",
+        "name": "Create a Chart Array for Chart.js",
+        "func": "var ChartData = [\n    {\n        series: [\"Temperature\", \"Humidity\"],\n        data: [[], []],\n        labels: [\"Temperature\", \"Humidity\"]\n    }\n];\n\nfor (var i = 0; i < msg.payload.length; i++) {\n    var item = msg.payload[i];\n    var p = item.payload;\n\n    if (!p || typeof p.time === 'undefined') {\n        continue;\n    }\n\n    ChartData[0].data[0].push({ x: p.time, y: p.temperature });\n    ChartData[0].data[1].push({ x: p.time, y: p.humidity });\n}\n\nChartData[0].data[0].sort((a, b) => a.x - b.x);\nChartData[0].data[1].sort((a, b) => a.x - b.x);\n\nmsg.payload = ChartData;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 320,
+        "wires": [
+            [
+                "a7d6b8ed14f8dec3"
+            ]
+        ]
+    },
+    {
+        "id": "5571671c.8ea9b",
+        "type": "ui_group",
+        "name": "Historical Data",
+        "tab": "1f3fcf14.3e0841",
+        "order": 1,
+        "disp": true,
+        "width": "18"
+    },
+    {
+        "id": "11d8514.a44dcaf",
+        "type": "ui_group",
+        "name": "Chart Controls",
+        "tab": "1f3fcf14.3e0841",
+        "order": 2,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "fb3b9588c974d6e8",
+        "type": "mongodb",
+        "hostname": "mongodb",
+        "topology": "direct",
+        "connectOptions": "",
+        "port": 27017,
+        "db": "iot_db",
+        "name": ""
+    },
+    {
+        "id": "1f3fcf14.3e0841",
+        "type": "ui_tab",
+        "name": "Historical Data",
+        "icon": "fa-area-chart",
+        "order": 5
+    },
+    {
+        "id": "a2017742957098be",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6",
+            "node-red-node-mongodb": "0.2.5"
+        }
+    }
+]
