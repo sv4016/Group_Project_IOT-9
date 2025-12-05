@@ -1,8 +1,18 @@
+
 # Cooperative Thermal Alert Network (IoT)
 
 ### B31OT – Internet of Things
 
+## Team Members
+
+* V Anantha Shankar
+* Sarjjana Venkataraman
+* Chinyere Uwa
+* Axel Biegalski
+
+  
 **ESP32 | ESP-NOW | MQTT | Node-RED | Docker**
+
 
 ## Overview
 
@@ -129,15 +139,6 @@ Node-RED dashboards include:
 
 ---
 
-## Team Members
-
-* V Anantha Shankar
-* Sarjjana Venkataraman
-* Chinyere Uwa
-* Axel Biegalski
-
----
-
 ## Future Improvements
 
 In the system we have, a node identifies a high temperature and sends a red LED message, and the Gateway instantly acts upon this message and sends another message to the rest of the nodes to change their colour of LED too. Since not all nodes wake up after the same time the ESP-NOW messages are not always instantaneous; when the other nodes update their colour a few seconds later. With this short delay, some packets can be lost but this does not have an impact on the speed with which the LED status changes. Notably, it does not have any impact on the real sensor readings, all the information is still recorded as designed and stored within our Docker-based system via the MQTT connection of our Gateway.
@@ -147,13 +148,13 @@ In the future we can be able to make the system more responsive by including a s
 
 ## OUTPUT
 
-**Before:**
+**Normal Condition (Green LED)**
 ![WhatsApp Image 2025-11-24 at 23 59 40_8aec2206](https://github.com/user-attachments/assets/077e4997-6302-4281-a4a7-a1e09a4d42c8)
 
-**After:**
+**Alert Condition (Red LED):**
 ![IoT img1](https://github.com/user-attachments/assets/8ec7df37-28af-43a9-be82-d5f6e5c95281)
 
-
+**Demonstration Video**
 https://github.com/user-attachments/assets/9a76da82-74e8-4cfe-b14d-549225b4376f
 
 
